@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+<div class="background-cover d-flex align-items-center justify-content-center bg-warning m-2">
+    <div class="row w-100">
+        <div class="col-md-6 d-flex align-items-center justify-content-center">
+            <div>
+                <p class="text-black h1">Imagine the possibilities! <br/> The No.1 car buying website in Bangladesh!</p>
+            </div>
+        </div>
+        <div class="col-md-6 d-flex align-items-center justify-content-center mt-1">
+            <img src="{% static 'car_buying.jpeg' %}" class="img-fluid img-cover" alt="Car Buying Image">
+        </div>
+    </div>
+</div>
+
+<div class="d-flex justify-content-center flex-wrap m-3">
+    <div class="m-2">
+        <a href="?model="><button class="btn btn-warning">All</button></a>
+    </div>
+    {% for car in cars %}
+    <div class="m-2">
+        <a href="?model={{ car.name }}"><button class="btn btn-warning">{{ car.name }}</button></a>
+    </div>
+    {% endfor %}
+</div>
+<button class="btn btn-primary justify-content-center m-3">Total cars: {{ data.count }}</button>
+<div class="d-flex flex-wrap justify-content-center px-3 pt-5">
+    {% for car in data %}
+    <div class="col-sm-3 m-2">
+        <div class="card">
+            <img src="{{ car.image.url }}" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title"><a href="{% url 'car_details' car.id %}" class="text-decoration-none text">{{car.name}}</a></h5>
+              <p class="card-text">{{car.description|truncatechars:30}}</p>
+            </div>
+          </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
